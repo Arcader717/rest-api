@@ -12,5 +12,8 @@ config.bind = "0.0.0.0:3750"
 async def index():
   return await render_template("index.html")
 
+@app.get("/ping")
+async def pong():
+  return await render_template("")
 
 asyncio.run(serve(app, config))
