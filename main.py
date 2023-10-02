@@ -14,12 +14,18 @@ apiDict = { # A dict containing the avaliable api links
     'method': 'GET'
   },
   'Change Ping Response': {
-    'url': '/ping/post'
+    'url': '/ping/post',
+    'method': 'POST',
+    'parameters': ["newMessage"]
   }
 }
+
+# Configurate
 config = Config()
 app = Flask(__name__)
 config.bind = "0.0.0.0:3750"
+
+
 
 @app.route("/")
 def index():
