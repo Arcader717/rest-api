@@ -50,7 +50,7 @@ async def pong():
       message = { 'message': f'{pingMsg}' }
       return jsonify(message), 200
     else:
-      abort(405)
+      abort(400)
 
 @app.post("/api/v1/ping")
 @validate_request(pPostD)
@@ -63,9 +63,32 @@ async def pongPost():
 @app.get("/api/v1")
 async def apiGet():
     return jsonify(apiDict)
+
+@app.post("/api/v1/math")
+async def mathGet():
+    requestDict = json.loads(await request.data)
+    Num1 = requestDict['firstNum']
+    num2 = requestDict['secondNum']
+    oper = requestDict['operation']
+    if oper == "+":
+      ans = Num1 + num2
+    elif oper == "-":
+      ans = Num1 - num2
+    elif oper == "x":
+      ans = Num1 * num2
+    elif oper == "/":
+      ans = Num1 / num2
+    elif oper == "^":
+      ans = Num1 ** num2
+    else:
+      return abort(400)
+    return jsonify({
+      'equation': f'{str(Num1)}{oper}{str(num2)}',
+      'answer': ans
+    }), 200
     
     
 # Run commands
-# asyncio.run(serve(app, config))
-if __name__ == "__main__":
-  app.run("0.0.0.0", 3750)
+asyncio.run(serve(app, config))
+"""if __name__ == "__main__":
+  app.run("0.0.0.0", 3750)"""
