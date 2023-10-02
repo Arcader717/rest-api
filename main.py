@@ -20,19 +20,35 @@ apiDict = { # A dict containing the avaliable api links
   }
 }
 
-# Configurate
+# Configurate and setup the apps
 config = Config()
 app = Flask(__name__)
 config.bind = "0.0.0.0:3750"
 
 
-
+# Base Website Links
 @app.route("/")
 def index():
-  return render_template("index.html")
+  return render_template("index.html"), 403
 
+
+# Rest Api Links
 @app.get("/ping")
 def pong():
-  return render_template("")
+  message = { 'message': f'{pingMsg}'}
+  return jsonify(message), 200
 
+@app.post("/ping/post")
+def pongPost():
+  r = json.loads(request.data)
+  pingMsg = r['newMessage']
+  mes = { 'message': 'Thanks for testing the Post method'}
+  return jsonify(mes), 200
+
+@app.get("/api")
+def apiGet():
+  return jsonify(apiDict)
+
+
+# Run Commands
 asyncio.run(serve(app, config))
