@@ -1,17 +1,19 @@
 openapi: 3.0.3
 info: 
   title: Basic REST API
-  version: 1.0.0
+  version: 1.1.0
   description: Made by [Arcader717](https://github.com/Arcader717). Exactly what the title is. The server may or may not be online
 servers:
 # Added by API Auto Mocking Plugin
 - description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/Arcader717/RestApi/1.0.0
+  url: https://virtserver.swaggerhub.com/Arcader717/RestApi/1.1.0
 - url: https://rest-api.arcader717.repl.co/api/v1
   description: Development Server, Version 1.0.0
 tags:
   - name: Ping
     description: Used to test the different response codes, or just the server in general
+  - name: Math
+    description: To solve my math problems for me
 paths: 
   /ping:
     get:
@@ -41,10 +43,58 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Message'
-        '405':
+        '400':
           description: "Method Not Allowed"
+  /math:
+    post:
+      tags:
+        - Math
+      summary: Does your basic math homework for you
+      requestBody:
+        $ref: '#/components/requestBodies/Math'
+      responses:
+        '200':
+          $ref: '#/components/responses/Math'
+        '400':
+          description: The operator was invalid, please use one of the valid operators
 components:
+  schemas:
+    mathSend:
+      title: MathRequest
+      type: object
+      properties:
+        firstNum:
+          type: integer
+          example: 10
+        secondNum:
+          type: integer
+          example: 2
+        operation:
+          type: string
+          example: "^"
+          enum: 
+            - '+'
+            - '-'
+            - '*'
+            - '/'
+            - '^'
+    mathResp:
+      title: MathResponse
+      type: object
+      properties:
+        equation:
+          type: string
+          example: "10^2"
+        answer:
+          type: integer
+          example: 100
   responses:
+    Math:
+      description: OK
+      content:
+        'application/json':
+          schema:
+            $ref: "#/components/schemas/mathResp"
     Message:
       description: OK
       content:
@@ -55,3 +105,10 @@ components:
               message:
                 description: The message from the server
                 type: string
+  requestBodies:
+    Math:
+      description: The request body for the math api links
+      content:
+        'application/json':
+          schema:
+            $ref: "#/components/schemas/mathSend"
