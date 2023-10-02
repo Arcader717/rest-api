@@ -1,0 +1,66 @@
+openapi: 3.1.0
+info: 
+  title: A Basic REST API
+  version: 1.0.0
+paths: 
+  /api:
+    deprecated: true
+    get:
+      summary: Returns a json object of the api
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ping:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        description: returns the api url for the ping function
+                      method:
+                        type: string
+                        description: returns the method used
+                  pingPost:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        description: the api url for pingPost
+                      method: 
+                        type: string
+                        description: the method used
+  /ping:
+    get:
+      summary: Returns a Pong!
+      responses:
+        "200":
+          description: "OK"
+  /ping/post:
+    post:
+      description: supposed to make the ping response different, but it does not work right now
+      summary: Does not do anything
+    requestBody:
+      content:
+        'application/json':
+          schema:
+            type: object
+          properties:
+            newMessage:
+              description: the message you want the pong message to send back
+              type: string
+          required:
+            - newMessage
+    responses:
+      '202':
+        description: "Updated. Will not do anything"
+        content:
+          'application/json': {}
+      '405':
+        description: "Method Not Allowed"
+        content:
+          'application/json': {}
+        
