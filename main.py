@@ -4,7 +4,7 @@ import json
 
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
-from quart import Quart, jsonify, render_template, request
+from quart import Quart, jsonify, render_template, request, abort
 from quart_schema import Info, QuartSchema, deprecate, hide, validate_request
 
 pingMsg = "Pong!" # The response to the "/ping" http request
@@ -44,12 +44,15 @@ async def index():
 
 
 # Rest Api Links
-@app.get("/ping")
+@app.get("/api/v1/ping")
 async def pong():
-    message = { 'message': f'{pingMsg}' }
-    return jsonify(message), 200
+    if request.headers['accept'] == "application/json":      
+      message = { 'message': f'{pingMsg}' }
+      return jsonify(message), 200
+    else:
+      abort(405)
 
-@app.post("/ping/post")
+@app.post("/api/v1/ping")
 @validate_request(pPostD)
 async def pongPost():
     r = json.loads(await request.data)

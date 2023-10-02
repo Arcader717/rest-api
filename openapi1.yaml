@@ -1,66 +1,57 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info: 
-  title: A Basic REST API
+  title: Basic REST API
   version: 1.0.0
+  description: Made by [Arcader717](https://github.com/Arcader717). Exactly what the title is. The server may or may not be online
+servers:
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/Arcader717/RestApi/1.0.0
+- url: https://rest-api.arcader717.repl.co/api/v1
+  description: Development Server, Version 1.0.0
+tags:
+  - name: Ping
+    description: Used to test the different response codes, or just the server in general
 paths: 
-  /api:
-    deprecated: true
-    get:
-      summary: Returns a json object of the api
-      responses:
-        "200":
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  ping:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                        description: returns the api url for the ping function
-                      method:
-                        type: string
-                        description: returns the method used
-                  pingPost:
-                    type: object
-                    properties:
-                      url:
-                        type: string
-                        description: the api url for pingPost
-                      method: 
-                        type: string
-                        description: the method used
   /ping:
     get:
+      tags:
+        - Ping
       summary: Returns a Pong!
       responses:
         "200":
-          description: "OK"
-  /ping/post:
+          $ref: '#/components/responses/Message'
     post:
-      description: supposed to make the ping response different, but it does not work right now
+      tags:
+        - Ping
+      description: Supposed to make the ping response different, but it does not work right now. It may return a custom `/ping` response in `v2.0.0`, but won't change the basic `GET /ping` response
       summary: Does not do anything
-    requestBody:
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                newMessage:
+                  description: the message you want the pong message to send back
+                  type: string
+              required:
+                - newMessage
+      responses:
+        '200':
+          $ref: '#/components/responses/Message'
+        '405':
+          description: "Method Not Allowed"
+components:
+  responses:
+    Message:
+      description: OK
       content:
         'application/json':
           schema:
             type: object
-          properties:
-            newMessage:
-              description: the message you want the pong message to send back
-              type: string
-          required:
-            - newMessage
-    responses:
-      '202':
-        description: "Updated. Will not do anything"
-        content:
-          'application/json': {}
-      '405':
-        description: "Method Not Allowed"
-        content:
-          'application/json': {}
-        
+            properties:
+              message:
+                description: The message from the server
+                type: string
