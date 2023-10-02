@@ -4,11 +4,8 @@ info:
   version: 1.1.0
   description: Made by [Arcader717](https://github.com/Arcader717). Exactly what the title is. The server may or may not be online
 servers:
-# Added by API Auto Mocking Plugin
-- description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/Arcader717/RestApi/1.1.0
 - url: https://rest-api.arcader717.repl.co/api/v1
-  description: Development Server, Version 1.0.0
+  description: Development Server, Version 1.1.0
 tags:
   - name: Ping
     description: Used to test the different response codes, or just the server in general
