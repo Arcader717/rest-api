@@ -11,6 +11,8 @@ tags:
     description: Used to test the different response codes, or just the server in general
   - name: Math
     description: To solve my math problems for me
+  - name: /auth/
+    description: A way to do some auth. It's fake. The username is `Username1` and password is `password123`
 paths: 
   /ping:
     get:
@@ -54,6 +56,27 @@ paths:
           $ref: '#/components/responses/Math'
         '400':
           description: The operator was invalid, please use one of the valid operators
+  /basic_auth/{username}/{password}:
+    post:
+      tags:
+        - Auth
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            title: username
+            type: string
+            example: "Username1"
+        - name: password
+          in: path
+          required: true
+          schema:
+            title: password
+            type: string
+            example: "password123"
+            
+
 components:
   schemas:
     mathSend:
