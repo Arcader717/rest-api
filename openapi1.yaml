@@ -75,6 +75,44 @@ paths:
             title: password
             type: string
             example: "password123"
+  /auth:
+    post:
+      tags:
+        - Auth
+      parameters:
+        - name: user
+          in: header
+          required: true
+          schema:
+            title: user
+            type: string
+            example: "Username1"
+        - name: pass
+          in: header
+          required: true
+          schema:
+            title: pass
+            type: string
+            example: "password123"
+      responses:
+        '200':
+          description: OK! Authorized!
+          content:
+            'application/json':
+              schema:
+                title: Message
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Authorized!"
+        '401':
+          description: An error occured, please check the message sent by the server
+          content:
+            'application/json':
+              schema:
+                title: Message
+                type: object
             
 
 components:
