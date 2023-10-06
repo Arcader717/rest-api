@@ -11,7 +11,7 @@ tags:
     description: Used to test the different response codes, or just the server in general
   - name: Math
     description: To solve my math problems for me
-  - name: /auth/
+  - name: Auth
     description: A way to do some auth. It's fake. The username is `Username1` and password is `password123`
 paths: 
   /ping:
@@ -75,6 +75,9 @@ paths:
             title: password
             type: string
             example: "password123"
+      responses:
+        '200':
+          description: OK! Authorized
   /auth:
     post:
       tags:
